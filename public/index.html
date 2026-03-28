@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Grid Balancer</title>
+    <!-- Use Inter font for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">🌙 Dark Mode</button>
+            <h1>Intelligent Grid Balancer</h1>
+            <p>Renewable Energy Monitoring & Prediction</p>
+            
+            <div class="search-box">
+                <input type="text" id="cityInput" placeholder="Enter city name..." value="London">
+                <button id="searchBtn">Check Power</button>
+            </div>
+        </header>
+
+        <main class="dashboard" style="display: none;" id="dashboard">
+            <h2 id="cityNameDisplay" class="city-title">London</h2>
+            
+            <section class="cards-row">
+                <!-- Weather Card -->
+                <div class="card weather-card">
+                    <h3>Current Weather</h3>
+                    <div class="weather-info">
+                        <div class="w-item">
+                            <span class="w-label">Temp:</span>
+                            <span class="w-value" id="currentTemp">-- °C</span>
+                        </div>
+                        <div class="w-item">
+                            <span class="w-label">Clouds:</span>
+                            <span class="w-value" id="currentClouds">-- %</span>
+                        </div>
+                        <div class="w-item">
+                            <span class="w-label">Wind:</span>
+                            <span class="w-value" id="currentWind">-- m/s</span>
+                        </div>
+                        <div class="w-item">
+                            <span class="w-label">Conditions:</span>
+                            <span class="w-value" id="currentDesc" style="text-transform: capitalize;">--</span>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-top: 2rem; font-size: 0.875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">5-Day Forecast</h4>
+                    <div class="forecast-mini-grid" id="forecastMiniGrid">
+                        <!-- JS injected here -->
+                    </div>
+                </div>
+
+                <!-- Grid Status Card -->
+                <div class="card grid-card">
+                    <h3>Grid Status</h3>
+                    <div class="status-info">
+                        <div class="s-item">
+                            <span class="s-label">Total Supply:</span>
+                            <span class="s-value supply-val" id="currentSupply">-- un</span>
+                        </div>
+                        <div class="s-item">
+                            <span class="s-label">Total Demand:</span>
+                            <span class="s-value demand-val" id="currentDemand">-- un</span>
+                        </div>
+                        <div class="s-item">
+                            <span class="s-label">Status:</span>
+                            <span class="s-value status-badge" id="currentStatusState">--</span>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-box" id="alertBox">
+                        <strong>Alert:</strong> <span id="alertMsg">System normal</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Balancing Controls & Battery -->
+            <section class="cards-row controls-row">
+                <!-- Simulation Controls Card -->
+                <div class="card control-card">
+                    <h3>Simulation Controls</h3>
+                    <div class="control-group">
+                        <label for="demandSlider">Total Demand Multiplier: <span id="demandValDisplay">1.0x</span></label>
+                        <input type="range" id="demandSlider" min="0.5" max="2.0" step="0.1" value="1.0">
+                    </div>
+                    <div class="control-group">
+                        <label for="supplySlider">Renewable Output Multiplier: <span id="supplyValDisplay">1.0x</span></label>
+                        <input type="range" id="supplySlider" min="0.0" max="2.0" step="0.1" value="1.0">
+                    </div>
+                </div>
+
+                <!-- Battery Storage Card -->
+                <div class="card battery-card">
+                    <h3>Battery Storage Tracker</h3>
+                    <div class="battery-info">
+                        <div class="battery-text">
+                            <span class="b-label" id="batteryStatusText">State of Charge (Start: 50% / 500 MW)</span>
+                            <span class="b-value" id="batteryValue">500 <span class="b-unit">MWh</span></span>
+                        </div>
+                        <div class="battery-bar-container">
+                            <div class="battery-fill" id="batteryFill" style="width: 50%;"></div>
+                        </div>
+                        <div class="grid-import-box" id="gridImportBox" style="display: none;">
+                            <strong>Warning:</strong> Battery depleted! Grid Import required: <span id="gridImportValue">0 MW</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="chart-section card">
+                <h3>5-Day Supply vs. Demand Forecast</h3>
+                <div class="chart-container">
+                    <canvas id="forecastChart"></canvas>
+                </div>
+            </section>
+        </main>
+        
+        <div id="loading" class="loading">Loading data...</div>
+        <div id="errorMsg" class="error"></div>
+    </div>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
